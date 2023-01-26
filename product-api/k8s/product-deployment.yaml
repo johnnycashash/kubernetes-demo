@@ -45,7 +45,7 @@ spec:
         tier: backend
     spec:
       containers:
-      - image: registry.hub.docker.com/jagansingh/event-api:latest
+      - image: registry.hub.docker.com/jagansingh/product-api:latest
         name: product
         env:
         - name: DB_HOST
