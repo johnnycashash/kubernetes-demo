@@ -53,6 +53,8 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: PASSWORD
+        - name: MYSQL_DATABASE
+          value: "product"
         ports:
         - containerPort: 3306
           name: mysql
