@@ -1,21 +1,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-mysql
+  name: product
   labels:
     app: product
 spec:
   ports:
-    - port: 3306
+    - port: 8080
   selector:
     app: product
-    tier: mysql
-  clusterIP: None
+    tier: backend
+  type: NodePort
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: product-pv-claim
   labels:
     app: product
 spec:
@@ -28,38 +28,45 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product-mysql
+  name: product
   labels:
     app: product
 spec:
   selector:
     matchLabels:
       app: product
-      tier: mysql
+      tier: backend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: product
-        tier: mysql
+        tier: backend
     spec:
       containers:
-      - image: mysql:5.6
-        name: mysql
+      - image: registry.hub.docker.com/jagansingh/event-api:latest
+        name: product
         env:
-        - name: MYSQL_ROOT_PASSWORD
+        - name: DB_HOST
+          value: product-mysql
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: USERNAME
+        - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secret
               key: PASSWORD
         ports:
-        - containerPort: 3306
-          name: mysql
+        - containerPort: 8080
+          name: product
         volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
+        - name: product-persistent-storage
+          mountPath: /var/www/html
       volumes:
-      - name: mysql-persistent-storage
+      - name: product-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: product-pv-claim
