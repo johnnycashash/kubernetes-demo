@@ -10,6 +10,6 @@ public interface ProductService {
 
     Product saveProduct(Product product);
 
-    void deleteProduct(Integer id);
+    String deleteProduct(Integer id);
 
 }
