@@ -47,6 +47,3 @@ target
 .idea
 build
 classes
-
-#SQL scripts
-*.sql

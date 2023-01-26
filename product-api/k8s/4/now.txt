@@ -1,0 +1,5 @@
+If db and secret in namespace a
+and product deployment in namespace b
+Then before deployment
+- copy secret from a to b
+- append DB_HOST property with .a.svc.cluster.local
