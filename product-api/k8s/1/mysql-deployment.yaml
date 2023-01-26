@@ -78,4 +78,4 @@ metadata:
 data:
   initdb.sql: |
     CREATE TABLE product (id INT, version VARCHAR(512), name VARCHAR(512), price INT, product_id VARCHAR(255));
-    INSERT INTO product VALUES (1, 'v1', 'JUST SOME ITEM', 32, '_vHjnksjdvDSjjLlkdk');
+    INSERT INTO product (id, name, price, product_id) VALUES (1, 'JUST SOME ITEM', 32, '_vHjnksjdvDSjjLlkdk');
