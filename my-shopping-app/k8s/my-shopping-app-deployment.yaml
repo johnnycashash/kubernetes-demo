@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-shopping-app
+  labels:
+    app: my-shopping-app
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: my-shopping-app
+    tier: frontend
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-shopping-app
+  labels:
+    app: my-shopping-app
+spec:
+  selector:
+    matchLabels:
+      app: my-shopping-app
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: my-shopping-app
+        tier: frontend
+    spec:
+      containers:
+        - image: registry.hub.docker.com/jagansingh/my-shopping-app:latest
+          name: my-shopping-app
+          ports:
+            - containerPort: 3000
+              name: my-shopping-app
