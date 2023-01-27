@@ -6,3 +6,6 @@ Spring Boot CRUD Application
 - mvn clean package
 - mvn docker:build
 - mvn docker:push
+
+### Local Run H2
+- mvn spring-boot:run -Dspring-boot.run.profiles=dev

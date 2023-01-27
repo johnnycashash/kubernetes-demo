@@ -73,3 +73,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - npm run build
 - docker build -t jagansingh/my-shopping-app .
 - docker push jagansingh/my-shopping-app:latest
+
+### Local run
+- Change url to localhost:8080 in App.js
+- npm start
