@@ -1,4 +1,6 @@
 sudo vi /etc/hosts
 add entry:
 193.168.49.2 product-api.info
+In windows:
+127.0.0.1 product-api.info
 minikube tunnel

@@ -1,0 +1,6 @@
+sudo vi /etc/hosts
+add entry:
+193.168.49.2 my-shopping-app.info
+In windows:
+127.0.0.1 my-shopping-app.info
+minikube tunnel
