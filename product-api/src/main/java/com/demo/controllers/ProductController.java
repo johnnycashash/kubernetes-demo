@@ -43,7 +43,7 @@ public class ProductController {
      * @return
      */
     @PostMapping
-    public Product saveProduct(Product product) {
+    public Product saveProduct(@RequestBody Product product) {
         return productService.saveProduct(product);
     }
 
