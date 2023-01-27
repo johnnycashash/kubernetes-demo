@@ -4,7 +4,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: []
+      product: []
     }
   }
 
@@ -12,24 +12,23 @@ class App extends Component {
     const url = "http://product-api.info/products";
     fetch(url)
     .then(response => response.json())
-    .then(response => console.log(response.json()))
-    .then(json => this.setState({ posts: json }))
+    .then(json => this.setState({ product: json }))
   }
 
   render() {
-    const { posts } = this.state;
+    const { product } = this.state;
     return (
       <div className="container">
         <div class="jumbotron">
-          <h1 class="display-4">Blog posts</h1>
+          <h1 class="display-4">Product List</h1>
         </div>
-        {posts.map((post) => (
+        {product.map((post) => (
           <div className="card" key={post.id}>
             <div className="card-header">
-              #{post.id} {post.title}
+              Id - {post.id} and Product Id - {post.productId}
             </div>
             <div className="card-body">
-              <p className="card-text">{post.body}</p>
+              <p className="card-text">{post.name} -- {post.price} Euro</p>
             </div>
           </div>
         ))}
