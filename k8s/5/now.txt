@@ -1,0 +1,10 @@
+backend: product-api.info
+frontend: my-shopping-app.info
+
+Create Delete Products
+
+Verify DB:
+k9s
+sh into mysql container
+mysql --host=localhost --user=root --password=pass1234 product
+select * from product;
