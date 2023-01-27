@@ -4,7 +4,8 @@ frontend: my-shopping-app.info
 Create Delete Products
 
 Verify DB:
-k9s
-sh into mysql container
+k9s sh into mysql container
+OR
+k exec -it product-mysql-547f656857-d4hrd -- /bin/bash
 mysql --host=localhost --user=root --password=pass1234 product
 select * from product;
