@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = "http://product-api.info/products";
+    const url = "http://product/products";
     fetch(url)
     .then(response => response.json())
     .then(json => this.setState({ product: json }))
