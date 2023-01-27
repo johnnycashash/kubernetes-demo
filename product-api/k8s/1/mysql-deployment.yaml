@@ -77,5 +77,5 @@ metadata:
   name: mysql-initdb-config
 data:
   initdb.sql: |
-    CREATE TABLE 'product' ('id' int(11) NOT NULL AUTO_INCREMENT, 'name' varchar(512) CHARACTER DEFAULT NULL, 'price' int(11) DEFAULT NULL, 'product_id' varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, PRIMARY KEY ('id')) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    CREATE TABLE product (id int(11) NOT NULL AUTO_INCREMENT, name varchar(512)  DEFAULT NULL, price int(11) DEFAULT NULL, product_id varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     INSERT INTO product (name, price, product_id) VALUES ('JUST SOME ITEM', 32000, '_vHjnksjdvDSjjLlkdk');
