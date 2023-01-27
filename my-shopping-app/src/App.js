@@ -31,6 +31,7 @@ class App extends Component {
             </div>
             <div className="card-body">
               <p className="card-text">{post.name}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
              <div class="card-footer text-muted">
                 {post.price}€
