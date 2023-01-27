@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -22,16 +22,24 @@ class App extends Component {
         <div class="jumbotron">
           <h1 class="display-4">Product List</h1>
         </div>
+        <div class="row">
         {product.map((post) => (
+          <div class="col-sm-6">
           <div className="card" key={post.id}>
             <div className="card-header">
-              Id - {post.id} and Product Id - {post.productId}
+              # {post.id}
             </div>
             <div className="card-body">
-              <p className="card-text">{post.name} -- {post.price} Euro</p>
+              <p className="card-text">{post.name}</p>
             </div>
-          </div>
+             <div class="card-footer text-muted">
+                {post.price}€
+              </div>
+            </div>
+            </div>
         ))}
+       </div>
+
       </div>
     );
   }
