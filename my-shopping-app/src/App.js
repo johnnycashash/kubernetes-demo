@@ -6,8 +6,14 @@ class App extends Component {
     this.state = {
       product: []
     }
+    this.delete = this.delete.bind(this);
   }
-
+ delete(post) {
+ console.log('Delete start')
+     const url = "http://product-api.info/products"+"/"+post.id;
+      fetch(url, { method: 'DELETE' })
+             .then(() => console.log('Delete successful'));
+  }
   componentDidMount() {
     const url = "http://product-api.info/products";
     fetch(url)
@@ -31,7 +37,7 @@ class App extends Component {
             </div>
             <div className="card-body">
               <p className="card-text">{post.name}</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <button onClick={this.delete(post)} class="btn btn-primary">Delete</button>
             </div>
              <div class="card-footer text-muted">
                 {post.price}€

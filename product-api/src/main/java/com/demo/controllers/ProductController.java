@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Product controller.
  */
-@RestController("/products")
+@RestController
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -20,7 +20,7 @@ public class ProductController {
      *
      * @return
      */
-    @GetMapping("/")
+    @GetMapping(value = "/products/")
     public Iterable<Product> getAllProducts() {
         return productService.listAllProducts();
     }
@@ -31,7 +31,7 @@ public class ProductController {
      * @param id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping(value = "/products/{id}")
     public Product getProduct(@PathVariable Integer id) {
         return productService.getProductById(id);
     }
@@ -42,7 +42,7 @@ public class ProductController {
      * @param product
      * @return
      */
-    @PostMapping
+    @PostMapping(value = "/products")
     public Product saveProduct(@RequestBody Product product) {
         return productService.saveProduct(product);
     }
@@ -53,7 +53,7 @@ public class ProductController {
      * @param id
      * @return
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/products/{id}")
     public String delete(@PathVariable Integer id) {
         return productService.deleteProduct(id);
     }
