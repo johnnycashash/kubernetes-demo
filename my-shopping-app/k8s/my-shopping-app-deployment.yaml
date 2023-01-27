@@ -6,7 +6,7 @@ metadata:
     app: my-shopping-app
 spec:
   ports:
-    - port: 8080
+    - port: 80
   selector:
     app: my-shopping-app
     tier: frontend
@@ -35,5 +35,4 @@ spec:
         - image: registry.hub.docker.com/jagansingh/my-shopping-app:latest
           name: my-shopping-app
           ports:
-            - containerPort: 3000
-              name: my-shopping-app
+            - containerPort: 80
