@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * Product controller.
  */
 @RestController
+@RequestMapping(path = "/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -20,7 +21,7 @@ public class ProductController {
      *
      * @return
      */
-    @GetMapping(value = "/products/")
+    @GetMapping
     public Iterable<Product> getAllProducts() {
         return productService.listAllProducts();
     }
@@ -31,7 +32,7 @@ public class ProductController {
      * @param id
      * @return
      */
-    @GetMapping(value = "/products/{id}")
+    @GetMapping(path = "/{id}")
     public Product getProduct(@PathVariable Integer id) {
         return productService.getProductById(id);
     }
@@ -42,7 +43,7 @@ public class ProductController {
      * @param product
      * @return
      */
-    @PostMapping(value = "/products")
+    @PostMapping
     public Product saveProduct(@RequestBody Product product) {
         return productService.saveProduct(product);
     }
@@ -53,8 +54,8 @@ public class ProductController {
      * @param id
      * @return
      */
-    @DeleteMapping(value = "/products/{id}")
-    public String delete(@PathVariable Integer id) {
+    @DeleteMapping(path = "/{id}")
+    public String delete(@PathVariable("id") Integer id) {
         return productService.deleteProduct(id);
     }
 
