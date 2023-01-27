@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-const url = "http://product-api.info/products";
+const url = "http://product-api.info:8080/products";
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class App extends Component {
     this.create = this.create.bind(this);
   }
   create(event) {
-    alert("Refresh");
     event.preventDefault();
     const text = {
       name: "A Product",
@@ -25,19 +24,24 @@ class App extends Component {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(() => console.log("Delete successful"));
+    }).then((response) => this.fetchData());
   }
 
   delete(post) {
     console.log("Delete start");
-    fetch(url+'/' + post.id, { method: "DELETE" }).then(() =>
-      console.log("Delete successful")
+    fetch(url + "/" + post.id, { method: "DELETE" }).then((id) =>
+      this.fetchData()
     );
   }
-  componentDidMount() {
+
+  fetchData() {
     fetch(url)
       .then((response) => response.json())
       .then((json) => this.setState({ product: json }));
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   render() {
