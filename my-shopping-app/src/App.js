@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-const url = "http://product-api.info:8080/products";
+const url = "http://product-api.info/products";
 
 class App extends Component {
   constructor(props) {
