@@ -9,7 +9,7 @@ spec:
     - host: product-api.info
       http:
         paths:
-          - path: /
+          - path: /products
             pathType: Prefix
             backend:
               service:
