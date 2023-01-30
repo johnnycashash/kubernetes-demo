@@ -1,0 +1,38 @@
+pipeline{
+    agent any
+    tools {
+        maven 'MAVEN'
+    }
+    stages {
+        stage('Build Maven') {
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '	github-user', url: 'https://github.com/johnnycashash/kubernetes-demo.git']]])
+                   sh '''
+                      cd product-api
+                      mvn -Dmaven.test.failure.ignore=true clean package
+                      '''
+
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                  sh '''
+                     cd product-api
+                     mvn docker:build
+                     '''
+                }
+            }
+        }
+        stage('Deploy Docker Image') {
+            steps {
+                script {
+                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u jagansingh -p ${dockerhubpwd}'
+                 }
+                 sh 'docker push jagansingh/product-api:0.0.2-SNAPSHOT'
+                }
+            }
+        }
+    }
+}

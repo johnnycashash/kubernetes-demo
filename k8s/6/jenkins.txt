@@ -1,0 +1,22 @@
+helm repo add jenkins https://charts.jenkins.io
+helm repo update
+
+helm upgrade --install myjenkins jenkins/jenkins
+
+kubectl get secret myjenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode
+
+
+kubectl --namespace default port-forward svc/myjenkins 8080:8080
+
+
+localhost:8080
+
+add plugins:
+maven integration
+pipeline maven integration
+GitHub
+Pipeline utility steps
+
+
+add pipeline project
+configure Github and add pipeline
