@@ -2,6 +2,7 @@ package com.demo.controllers;
 
 import com.demo.entities.Product;
 import com.demo.services.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "/products")
+@Slf4j
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -23,6 +25,7 @@ public class ProductController {
      */
     @GetMapping
     public Iterable<Product> getAllProducts() {
+        log.info("getAllProducts");
         return productService.listAllProducts();
     }
 
@@ -34,6 +37,7 @@ public class ProductController {
      */
     @GetMapping(path = "/{id}")
     public Product getProduct(@PathVariable Integer id) {
+        log.info("getProduct");
         return productService.getProductById(id);
     }
 
@@ -45,6 +49,7 @@ public class ProductController {
      */
     @PostMapping
     public Product saveProduct(@RequestBody Product product) {
+        log.info("saveProduct");
         return productService.saveProduct(product);
     }
 
@@ -56,6 +61,7 @@ public class ProductController {
      */
     @DeleteMapping(path = "/{id}")
     public String delete(@PathVariable("id") Integer id) {
+        log.info("delete");
         return productService.deleteProduct(id);
     }
 
