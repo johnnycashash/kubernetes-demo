@@ -5,6 +5,9 @@ metadata:
   labels:
     type: local
 spec:
+  claimRef:
+    namespace: default
+    name: mysql-pv-claim
   storageClassName: standard
   capacity:
     storage: 3Gi
