@@ -65,7 +65,7 @@ spec:
           name: product
         volumeMounts:
         - name: product-persistent-storage
-          mountPath: /var/www/html
+          mountPath: /app
       volumes:
       - name: product-persistent-storage
         persistentVolumeClaim:
