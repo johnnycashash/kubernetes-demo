@@ -71,7 +71,7 @@ spec:
           - "-c"
           - "while true; do cat /mnt/spring.log; sleep 5; done"
         image: busybox
-        name: init-container-msg-container-main
+        name: logrepeater
         volumeMounts:
           - mountPath: /mnt
             name: product-persistent-storage

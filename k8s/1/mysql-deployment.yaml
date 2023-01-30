@@ -19,6 +19,7 @@ metadata:
   labels:
     app: product
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
