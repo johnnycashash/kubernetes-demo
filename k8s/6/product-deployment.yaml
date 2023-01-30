@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: product
+  labels:
+    app: product
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: product
+    tier: backend
+  type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: product-pv-claim
+  labels:
+    app: product
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product
+  labels:
+    app: product
+spec:
+  selector:
+    matchLabels:
+      app: product
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: product
+        tier: backend
+    spec:
+      containers:
+      - image: registry.hub.docker.com/jagansingh/product-api:latest
+        name: product
+        env:
+        - name: DB_HOST
+          value: product-mysql
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: PASSWORD
+        ports:
+        - containerPort: 8080
+          name: product
+        volumeMounts:
+        - name: product-persistent-storage
+          mountPath: /app
+      - command:
+          - "/bin/sh"
+          - "-c"
+          - "while true; do cat /mnt/spring.log; sleep 5; done"
+        image: busybox
+        name: init-container-msg-container-main
+        volumeMounts:
+          - mountPath: /mnt
+            name: product-persistent-storage
+      volumes:
+      - name: product-persistent-storage
+        persistentVolumeClaim:
+          claimName: product-pv-claim
