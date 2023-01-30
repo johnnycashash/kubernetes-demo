@@ -8,6 +8,7 @@ pipeline{
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '	github-user', url: 'https://github.com/johnnycashash/kubernetes-demo.git']]])
                    sh '''
                       cd my-shopping-app
+                      npm install
                       npm run build
                       '''
 
