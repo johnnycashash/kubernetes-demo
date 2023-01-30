@@ -19,7 +19,7 @@ metadata:
   labels:
     app: product
 spec:
-  storageClassName: manual
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
