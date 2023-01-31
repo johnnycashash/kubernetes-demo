@@ -31,6 +31,18 @@ spec:
         app: nginx
         tier: backend
     spec:
+      init-container:
+        - command:
+            - "/bin/sh"
+            - "-c"
+            - "while true; do cat /mnt/spring.log; sleep 5; done"
+          image: busybox
+          name: init-homepage
+          volumeMounts:
+            - mountPath: /mnt/busybox
+              name: nginx-persistent-storage
+            - mountPath: /mnt/busybox
+              name: homepage-init
       containers:
         - image: nginx:latest
           name: nginx
@@ -43,6 +55,9 @@ spec:
         - name: nginx-persistent-storage
           persistentVolumeClaim:
             claimName: nginx-pv-claim
+        - name: homepage-init
+          configMap:
+            name: nginx-init-homepage-cf
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -57,3 +72,10 @@ spec:
   resources:
     requests:
       storage: 500Mi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-init-homepage-cf
+data:
+  index.html: <!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>
