@@ -31,7 +31,7 @@ spec:
         app: nginx
         tier: backend
     spec:
-      init-container:
+      initContainers:
         - command:
             - "/bin/sh"
             - "-c"
