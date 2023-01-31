@@ -35,13 +35,13 @@ spec:
         - command:
             - "/bin/sh"
             - "-c"
-            - "while true; do cat /mnt/spring.log; sleep 5; done"
+            - "cp /mnt/busybox-cf/index.html /mnt/busybox/"
           image: busybox
           name: init-homepage
           volumeMounts:
             - mountPath: /mnt/busybox
               name: nginx-persistent-storage
-            - mountPath: /mnt/busybox
+            - mountPath: /mnt/busybox-cf
               name: homepage-init
       containers:
         - image: nginx:latest
