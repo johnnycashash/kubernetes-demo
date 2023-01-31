@@ -9,7 +9,6 @@ spec:
     - port: 80
   selector:
     app: nginx
-    tier: backend
   type: NodePort
 ---
 apiVersion: apps/v1
@@ -22,14 +21,12 @@ spec:
   selector:
     matchLabels:
       app: nginx
-      tier: backend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: nginx
-        tier: backend
     spec:
       initContainers:
         - command:
