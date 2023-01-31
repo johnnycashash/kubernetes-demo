@@ -43,3 +43,17 @@ spec:
         - name: nginx-persistent-storage
           persistentVolumeClaim:
             claimName: nginx-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pv-claim
+  labels:
+    app: product
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
