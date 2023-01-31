@@ -38,7 +38,7 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: nginx-persistent-storage
-              mountPath: /var/www/html/
+              mountPath: /usr/share/nginx/html
       volumes:
         - name: nginx-persistent-storage
           persistentVolumeClaim:
