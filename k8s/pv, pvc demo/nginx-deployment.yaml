@@ -49,7 +49,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nginx-pv-claim
   labels:
-    app: product
+    app: nginx
 spec:
   storageClassName: standard
   accessModes:
