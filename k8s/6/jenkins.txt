@@ -17,6 +17,7 @@ pipeline maven integration
 GitHub
 Pipeline utility steps
 
+global tools config add maven and git
 
 add pipeline project
 configure Github and add pipeline
