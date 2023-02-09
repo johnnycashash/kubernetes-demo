@@ -21,3 +21,14 @@ global tools config add maven and git
 
 add pipeline project
 configure Github and add pipeline
+
+
+
+
+- Docker run below
+
+docker run --name jenkins-jdk11 --user root --detach --env DOCKER_HOST=tcp://localhost:2375 --volume jenkins-data:/var/jenkins_home --publish 8080:8080 --publish 50000:50000 -v $(which docker):/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME":/home jenkins/jenkins:latest-jdk11
+
+alternate:
+https://www.youtube.com/watch?v=fodA9rM5xoo
+

@@ -1,36 +1,62 @@
-pipeline{
-    agent any
-    tools {
-        maven '3.8.7'
-    }
-    stages {
-        stage('Build Maven') {
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '	github-user', url: 'https://github.com/johnnycashash/kubernetes-demo.git']]])
-                   sh '''
-                      cd product-api
-                      mvn -Dmaven.test.failure.ignore=true clean package
-                      '''
+podTemplate(label: 'mypod', containers: [
+    containerTemplate(name: 'git', image: 'alpine/git', ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'maven', image: 'maven:3.8.6-openjdk-11', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'kubectl', image: 'jagansingh/kube-cli:latest', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true)
+  ],
+  volumes: [
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+  ]
+  )
+  {
+    node('mypod') {
 
+        stage('Clone repository') {
+            container('git') {
+                sh 'whoami'
+                sh 'hostname -i'
+                sh 'git clone -b main https://github.com/johnnycashash/kubernetes-demo.git'
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                  sh '''
-                     cd product-api
-                     mvn docker:build
-                     '''
+
+        stage('Maven Build') {
+            container('maven') {
+                sh 'hostname'
+                sh 'hostname -i'
+                sh 'cd ./kubernetes-demo/product-api && mvn -Dmaven.test.failure.ignore=true clean package'
+            }
+        }
+
+        stage('Docker Build') {
+            container('docker') {
+                sh 'hostname'
+                sh 'hostname -i'
+                sh 'cd ./kubernetes-demo/product-api && docker build -t jagansingh/product-api .'
+            }
+        }
+
+        stage('Docker Login') {
+            container('docker') {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'hostname'
+                    sh 'hostname -i'
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
                 }
             }
         }
-        stage('Deploy Docker Image') {
-            steps {
-                script {
-                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                    sh 'docker login -u jagansingh -p ${dockerhubpwd}'
-                 }
-                 sh 'docker push jagansingh/product-api:0.0.2-SNAPSHOT'
+
+        stage('Docker Push') {
+            container('docker') {
+                sh 'hostname'
+                sh 'hostname -i'
+                sh 'docker push jagansingh/product-api:latest'
+            }
+        }
+
+        stage('Kubectl Deploy') {
+            container('kubectl') {
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig_copied', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                    sh 'cd ./kubernetes-demo/k8s/2 && kubectl apply -f product-deployment.yaml'
                 }
             }
         }
